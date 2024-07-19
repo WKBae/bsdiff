@@ -17,6 +17,16 @@ file(
 )
 include(${CMAKE_CURRENT_BINARY_DIR}/cmake/CPM.cmake)
 
+# Add libsais package
+CPMAddPackage(
+  NAME libsais
+  GITHUB_REPOSITORY IlyaGrebnov/libsais
+  GIT_TAG v2.8.4
+  OPTIONS
+    "LIBSAIS_USE_OPENMP OFF"
+    "LIBSAIS_BUILD_SHARED_LIB OFF"
+)
+
 # Helper macro to check the result and fail if not found
 macro(check_or_fail var_name)
     if (NOT ${var_name})
@@ -61,6 +71,10 @@ target_link_libraries(bspatch BZip2::BZip2)
 
 # Define source files for the library
 add_library(libbsdiff STATIC bsdiff.c bspatch.c)
+
+# Link libsais library to bsdiff
+target_link_libraries(bsdiff libsais)
+target_link_libraries(libbsdiff libsais)
 
 # Remove the "lib" prefix from the library name
 set(CMAKE_STATIC_LIBRARY_PREFIX "")
