@@ -3,7 +3,6 @@
 *.lo
 *.o
 .dirstamp
-Makefile-bsdiff.am.inc
 AUTHORS
 NEWS
 README
